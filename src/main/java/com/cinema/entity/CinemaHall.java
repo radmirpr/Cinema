@@ -1,12 +1,13 @@
 package com.cinema.entity;
 
 import jakarta.persistence.*;
-
+import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "cinema_halls")
+@Data
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,13 +16,17 @@ public class CinemaHall {
     @Column(nullable = false)
     private String name;
 
-    private Integer capacity; // общее количество мест
+    private Integer capacity;
 
-    @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL)
+    @Column(name = "layout_rows")
+    private Integer layoutRows;
+
+    @Column(name = "layout_columns")
+    private Integer layoutColumns;
+
+    @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Seat> seats = new ArrayList<>();
 
-    @OneToMany(mappedBy = "hall")
+    @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Screening> screenings = new ArrayList<>();
-
-    // constructors, getters, setters
 }

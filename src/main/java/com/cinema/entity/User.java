@@ -1,16 +1,16 @@
 package com.cinema.entity;
 
-import com.cinema.enums.Role;
-import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@Data
 public class User {
-    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,25 +18,30 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash; // Лучше хранить хэш, а не пароль
 
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
 
+    private String phone;
+
     @Enumerated(EnumType.STRING)
-    private Role role; // ROLE_USER, ROLE_ADMIN
+    private UserRole role = UserRole.USER; // Значение по умолчанию
 
-    @OneToMany(mappedBy = "user")
+    @Column(name = "is_active")
+    private Boolean isActive = true;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Booking> bookings = new ArrayList<>();
+}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    // constructors, getters, setters
+enum UserRole {
+    USER, ADMIN, MANAGER
 }

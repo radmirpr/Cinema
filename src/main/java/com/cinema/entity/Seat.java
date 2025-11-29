@@ -1,30 +1,38 @@
 package com.cinema.entity;
 
-import com.cinema.enums.SeatType;
 import jakarta.persistence.*;
-
+import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "seats")
+@Data
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hall_id", nullable = false)
+    @JoinColumn(name = "hall_id")
     private CinemaHall hall;
 
-    private Integer rowNumber; // номер ряда
-    private Integer seatNumber; // номер места в ряду
+    @Column(name = "row_number")
+    private Integer rowNumber;
+
+    @Column(name = "seat_number")
+    private Integer seatNumber;
 
     @Enumerated(EnumType.STRING)
-    private SeatType seatType; // REGULAR, VIP
+    private SeatType seatType = SeatType.REGULAR;
 
-    @ManyToMany(mappedBy = "seats")
+    @Column(name = "is_active")
+    private Boolean isActive = true;
+
+    @ManyToMany(mappedBy = "seats", fetch = FetchType.LAZY)
     private List<Booking> bookings = new ArrayList<>();
+}
 
-    // constructors, getters, setters
+enum SeatType {
+    REGULAR, VIP, COUPLE, DISABLED
 }
