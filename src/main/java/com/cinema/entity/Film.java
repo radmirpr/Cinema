@@ -40,7 +40,3 @@ public class Film {
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Screening> screenings = new ArrayList<>();
 }
-
-enum Genre {
-    ACTION, COMEDY, DRAMA, HORROR, SCI_FI, ROMANCE, THRILLER, ANIMATION, FANTASY
-}

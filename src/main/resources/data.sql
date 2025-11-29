@@ -1,12 +1,10 @@
--- Сброс последовательностей (для H2)
-ALTER TABLE users ALTER COLUMN id RESTART WITH 1;
-ALTER TABLE films ALTER COLUMN id RESTART WITH 1;
-ALTER TABLE cinema_halls ALTER COLUMN id RESTART WITH 1;
-ALTER TABLE seats ALTER COLUMN id RESTART WITH 1;
-ALTER TABLE screenings ALTER COLUMN id RESTART WITH 1;
-ALTER TABLE bookings ALTER COLUMN id RESTART WITH 1;
-ALTER TABLE booking_seats ALTER COLUMN id RESTART WITH 1;
-
+-- Вставка фильмов (используем значения enum)
+-- Вставка фильмов (используем значения enum)
+INSERT INTO films (title, description, duration_minutes, genre, age_rating, director, release_date, poster_url) VALUES
+                                                                                                                    ('Интерстеллар', 'Фантастический эпос о путешествиях через червоточину', 169, 'SCI_FI', '16+', 'Кристофер Нолан', '2014-11-06', 'https://via.placeholder.com/300x450/3498db/ffffff?text=Interstellar'),
+                                                                                                                    ('Начало', 'Триллер о проникновении в сны', 148, 'SCI_FI', '16+', 'Кристофер Нолан', '2010-07-16', 'https://via.placeholder.com/300x450/e74c3c/ffffff?text=Inception'),
+                                                                                                                    ('Король Лев', 'Мультфильм о круговороте жизни в саванне', 88, 'ANIMATION', '6+', 'Роджер Аллерс', '1994-06-24', 'https://via.placeholder.com/300x450/2ecc71/ffffff?text=Lion+King'),
+                                                                                                                    ('Криминальное чтиво', 'Культовый фильм о преступном мире Лос-Анджелеса', 154, 'DRAMA', '18+', 'Квентин Тарантино', '1994-10-14', 'https://via.placeholder.com/300x450/f39c12/ffffff?text=Pulp+Fiction');
 -- ===========================================================================
 -- Вставка пользователей
 -- ===========================================================================
